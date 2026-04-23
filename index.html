@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vitelize Sales Rep Training Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root,[data-theme="light"]{
+      --text-xs:clamp(.75rem,.7rem + .25vw,.875rem);
+      --text-sm:clamp(.875rem,.8rem + .35vw,1rem);
+      --text-base:clamp(1rem,.95rem + .25vw,1.125rem);
+      --text-lg:clamp(1.125rem,1rem + .75vw,1.5rem);
+      --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);
+      --text-2xl:clamp(2rem,1.2rem + 2.5vw,3.5rem);
+      --space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;--space-5:1.25rem;--space-6:1.5rem;--space-8:2rem;--space-10:2.5rem;--space-12:3rem;--space-16:4rem;--space-20:5rem;
+      --color-bg:#f7f6f2;--color-surface:#fcfbf8;--color-surface-2:#eef2f8;--color-border:#d6dbe5;--color-text:#111b39;--color-text-muted:#60708c;--color-text-faint:#98a3b8;--color-primary:#09173f;--color-primary-2:#1fbaa6;--color-accent:#e7f7f3;--color-success:#198754;--color-warning:#d88c00;--color-alert:#8e3d1d;
+      --shadow-sm:0 6px 18px rgba(11,17,34,.06);--shadow-md:0 18px 42px rgba(11,17,34,.09);--shadow-lg:0 26px 70px rgba(11,17,34,.14);
+      --radius-sm:14px;--radius-md:22px;--radius-lg:30px;--radius-full:999px;
+    }
+    [data-theme="dark"]{
+      --color-bg:#12161d;--color-surface:#171c25;--color-surface-2:#1f2632;--color-border:#2b3444;--color-text:#f4f7fb;--color-text-muted:#aab5c8;--color-text-faint:#6f7c92;--color-primary:#f4f7fb;--color-primary-2:#4dd8c5;--color-accent:#143733;--color-success:#44b678;--color-warning:#f0b64f;--color-alert:#ff8c5b;
+      --shadow-sm:0 6px 18px rgba(0,0,0,.24);--shadow-md:0 18px 42px rgba(0,0,0,.3);--shadow-lg:0 26px 70px rgba(0,0,0,.38);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{min-height:100dvh;font-family:'Manrope',system-ui,sans-serif;font-size:var(--text-base);line-height:1.65;color:var(--color-text);background:radial-gradient(circle at top right, rgba(31,186,166,.10), transparent 24%),var(--color-bg)}
+    img{display:block;max-width:100%;height:auto}
+    a{text-decoration:none;color:inherit}
+    button{font:inherit;border:0;background:none;cursor:pointer}
+    summary{list-style:none;cursor:pointer}
+    summary::-webkit-details-marker{display:none}
+    .skip-link{position:absolute;left:-9999px;top:auto}.skip-link:focus{left:1rem;top:1rem;z-index:1000;background:var(--color-primary);color:var(--color-bg);padding:.75rem 1rem;border-radius:12px}
+    .app-shell{display:grid;grid-template-columns:300px minmax(0,1fr);min-height:100dvh}
+    .sidebar{position:sticky;top:0;height:100dvh;padding:1.1rem;border-right:1px solid color-mix(in srgb,var(--color-text) 10%, transparent);background:color-mix(in srgb,var(--color-surface) 92%, transparent);backdrop-filter:blur(16px);overflow:auto}
+    .brand{display:flex;gap:.9rem;align-items:center;margin-bottom:1.4rem}
+    .brand svg{width:42px;height:42px;color:var(--color-primary-2);flex:none}
+    .brand-title{font-weight:800}
+    .brand-sub{font-size:var(--text-xs);color:var(--color-text-muted)}
+    .theme-toggle{width:100%;margin-top:1rem;padding:.85rem 1rem;border-radius:16px;background:var(--color-surface);border:1px solid color-mix(in srgb,var(--color-text) 10%, transparent);text-align:left;box-shadow:var(--shadow-sm)}
+    .nav-group{margin-top:1.2rem}
+    .nav-label{font-size:var(--text-xs);color:var(--color-text-faint);font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.7rem}
+    .nav-list{display:grid;gap:.5rem}
+    .nav-link{display:flex;justify-content:space-between;align-items:center;padding:.85rem .95rem;border-radius:16px;background:transparent;color:var(--color-text-muted);border:1px solid transparent}
+    .nav-link:hover,.nav-link:focus-visible{background:var(--color-surface);border-color:color-mix(in srgb,var(--color-text) 8%, transparent);color:var(--color-text)}
+    .nav-chip{font-size:var(--text-xs);padding:.2rem .5rem;border-radius:999px;background:var(--color-accent);color:var(--color-primary-2);font-weight:800}
+    .main{padding:1.2rem}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 1.1rem;border:1px solid color-mix(in srgb,var(--color-text) 9%, transparent);border-radius:24px;background:color-mix(in srgb,var(--color-surface) 92%, transparent);box-shadow:var(--shadow-sm);margin-bottom:1.2rem}
+    .topbar p{color:var(--color-text-muted);font-size:var(--text-sm);max-width:68ch}
+    .cta-row{display:flex;flex-wrap:wrap;gap:.75rem}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:.9rem 1.1rem;border-radius:16px;font-weight:800}
+    .btn-primary{background:var(--color-primary);color:var(--color-bg)}
+    .btn-secondary{background:var(--color-surface);border:1px solid color-mix(in srgb,var(--color-text) 10%, transparent)}
+    .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:1.2rem;margin-bottom:1.2rem}
+    .panel{background:var(--color-surface);border:1px solid color-mix(in srgb,var(--color-text) 9%, transparent);border-radius:28px;box-shadow:var(--shadow-md)}
+    .hero-copy{padding:1.5rem}
+    .eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .8rem;border-radius:999px;background:var(--color-accent);color:var(--color-primary-2);font-size:var(--text-sm);font-weight:800;margin-bottom:1rem}
+    h1{font-size:var(--text-2xl);line-height:1.02;letter-spacing:-.04em;max-width:12ch;margin-bottom:1rem}
+    .lead{max-width:62ch;color:var(--color-text-muted);margin-bottom:1.2rem}
+    .score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem;margin-top:1rem}
+    .score{padding:1rem;border-radius:22px;background:var(--color-surface-2);border:1px solid color-mix(in srgb,var(--color-text) 6%, transparent)}
+    .score strong{display:block;font-size:1.2rem;margin-bottom:.1rem}
+    .hero-visual{padding:1rem;display:grid;gap:1rem}
+    .screen-card{border-radius:24px;overflow:hidden;border:1px solid var(--color-border);background:var(--color-surface-2)}
+    .screen-card img{width:100%;aspect-ratio:9/18;object-fit:cover}
+    .mini-note{padding:1rem;border-radius:22px;background:linear-gradient(135deg,color-mix(in srgb,var(--color-primary-2) 10%, var(--color-surface)), var(--color-surface));border:1px solid color-mix(in srgb,var(--color-primary-2) 18%, transparent)}
+    .content-grid{display:grid;grid-template-columns:1fr 360px;gap:1.2rem}
+    .section-card{padding:1.35rem}
+    .section-card + .section-card{margin-top:1rem}
+    .section-title{font-size:var(--text-xl);line-height:1.06;letter-spacing:-.03em;margin-bottom:.55rem}
+    .section-intro{color:var(--color-text-muted);max-width:72ch;margin-bottom:1rem}
+    .lesson-grid{display:grid;gap:1rem}
+    details.module{border:1px solid color-mix(in srgb,var(--color-text) 9%, transparent);background:var(--color-surface);border-radius:24px;overflow:hidden}
+    details.module[open]{box-shadow:var(--shadow-sm)}
+    .module-summary{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.15rem 1.2rem}
+    .module-summary h3{font-size:1.06rem;margin-bottom:.2rem}
+    .module-summary p{font-size:var(--text-sm);color:var(--color-text-muted);max-width:56ch}
+    .module-index{display:inline-flex;align-items:center;justify-content:center;width:2.4rem;height:2.4rem;border-radius:999px;background:var(--color-accent);color:var(--color-primary-2);font-weight:900;flex:none}
+    .module-arrow{font-size:1.4rem;color:var(--color-text-muted);transition:transform .18s ease}
+    details[open] .module-arrow{transform:rotate(45deg)}
+    .module-body{padding:0 1.2rem 1.2rem;display:grid;gap:1rem}
+    .module-columns{display:grid;grid-template-columns:1.1fr .9fr;gap:1rem}
+    .callout-box{padding:1rem;border-radius:18px;background:var(--color-surface-2);border:1px solid color-mix(in srgb,var(--color-text) 7%, transparent)}
+    .callout-box h4{margin-bottom:.35rem;font-size:1rem}
+    .bullet-list{display:grid;gap:.6rem}
+    .bullet-list li{display:flex;gap:.65rem;align-items:flex-start}
+    .bullet-list li::before{content:"";width:10px;height:10px;border-radius:999px;background:var(--color-primary-2);margin-top:.55rem;flex:none}
+    .talk-track{padding:1rem 1.1rem;border-radius:18px;background:linear-gradient(135deg,color-mix(in srgb,var(--color-primary-2) 10%, var(--color-surface)), var(--color-surface));border:1px solid color-mix(in srgb,var(--color-primary-2) 18%, transparent)}
+    .talk-track h4,.objection h4,.screen-note h4{margin-bottom:.4rem}
+    .quote{font-weight:700;color:var(--color-text)}
+    .objection{padding:1rem 1.1rem;border-radius:18px;background:color-mix(in srgb,var(--color-warning) 10%, var(--color-surface));border:1px solid color-mix(in srgb,var(--color-warning) 28%, transparent)}
+    .screen-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+    .screen-note{padding:.8rem;border-radius:18px;background:var(--color-surface-2);border:1px solid color-mix(in srgb,var(--color-text) 7%, transparent)}
+    .screen-note img{border-radius:16px;border:1px solid var(--color-border);margin-bottom:.65rem;aspect-ratio:9/18;object-fit:cover;background:#eaeef5}
+    .sidebar-panel{padding:1.25rem}
+    .stack{display:grid;gap:1rem}
+    .checklist{display:grid;gap:.8rem}
+    .check-item{display:flex;gap:.75rem;align-items:flex-start;padding:.9rem;border-radius:18px;background:var(--color-surface-2);border:1px solid color-mix(in srgb,var(--color-text) 7%, transparent)}
+    .check-item strong{display:block}
+    .dot{width:12px;height:12px;border-radius:999px;background:var(--color-success);margin-top:.35rem;flex:none}
+    .warning-dot{background:var(--color-warning)}
+    .alert-dot{background:var(--color-alert)}
+    .faq details{border:1px solid color-mix(in srgb,var(--color-text) 8%, transparent);background:var(--color-surface-2);border-radius:18px;padding:.9rem 1rem}
+    .faq details + details{margin-top:.75rem}
+    .faq summary{font-weight:800}
+    .faq p{margin-top:.55rem;color:var(--color-text-muted);font-size:var(--text-sm)}
+    .footer-note{margin-top:1rem;padding:1rem 1.1rem;border-radius:20px;background:var(--color-surface);border:1px solid color-mix(in srgb,var(--color-text) 8%, transparent);color:var(--color-text-muted)}
+    @media (max-width:1100px){.content-grid{grid-template-columns:1fr}.sidebar{position:relative;height:auto}.app-shell{grid-template-columns:1fr}.hero,.module-columns,.screen-strip,.score-grid{grid-template-columns:1fr}}
+    @media (max-width:720px){.main,.sidebar{padding:.85rem}.topbar{flex-direction:column;align-items:flex-start}.hero-copy,.hero-visual,.section-card,.sidebar-panel{padding:1rem}.module-summary{align-items:flex-start}.nav-list{gap:.35rem}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <svg viewBox="0 0 64 64" fill="none" aria-label="Vitelize logo">
+          <path d="M15 14h12l11 16 11-16h6L41 50h-8L15 14Z" fill="currentColor" opacity=".95"/>
+          <path d="M9 14h10l9 13-4 6L9 14Zm46 0h-10l-9 13 4 6 15-19ZM23 36l4 6-8 8H8l15-14Zm18 0 15 14H45l-8-8 4-6Z" fill="currentColor" opacity=".55"/>
+        </svg>
+        <div>
+          <div class="brand-title">Vitelize Rep Portal</div>
+          <div class="brand-sub">Training + talk tracks + screen map</div>
+        </div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">Portal map</div>
+        <div class="nav-list">
+          <a class="nav-link" href="#overview">Overview <span class="nav-chip">Start</span></a>
+          <a class="nav-link" href="#modules">Training modules <span class="nav-chip">4</span></a>
+          <a class="nav-link" href="#talk-tracks">Talk tracks <span class="nav-chip">Live</span></a>
+          <a class="nav-link" href="#faq">Objections & FAQ <span class="nav-chip">Ready</span></a>
+        </div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label">What to remember</div>
+        <div class="checklist">
+          <div class="check-item"><span class="dot"></span><div><strong>Vitelize = patient-facing coordination</strong><span class="brand-sub">Digital journey, reminders, messaging, intake, and engagement live here.[file:71]</span></div></div>
+          <div class="check-item"><span class="dot"></span><div><strong>CareValidate = clinical layer</strong><span class="brand-sub">Clinicians handle prescribing and medication monitoring.[file:71]</span></div></div>
+          <div class="check-item"><span class="dot"></span><div><strong>CoreProgression = member/training sync</strong><span class="brand-sub">Connection, recognition, and training continuity support member value.[file:71][file:69]</span></div></div>
+        </div>
+      </div>
+
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch theme">Toggle dark mode</button>
+    </aside>
+
+    <main class="main" id="main">
+      <section class="topbar">
+        <div>
+          <strong>Use this portal to train reps on how to explain the onboarding journey, who owns each part of care, and how to walk a prospect through the screenshots in a confident sequence.[file:71][file:69]</strong>
+          <p>All positioning here is anchored to the supplied app copy and the screenshot/mock-up package, with legacy pricing or placeholder UI treated as reference-only unless production confirms otherwise.[file:71][file:69]</p>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#modules">Open training modules</a>
+          <a class="btn btn-secondary" href="#talk-tracks">Go to talk tracks</a>
+        </div>
+      </section>
+
+      <section class="hero" id="overview">
+        <article class="panel hero-copy">
+          <div class="eyebrow">Sales rep training portal</div>
+          <h1>Teach the story, not just the screens.</h1>
+          <p class="lead">The strongest rep narrative starts with Vitelize as the patient-facing experience, then clearly explains how clinical oversight runs through affiliated CareValidate providers and how CoreProgression can connect membership and training continuity.[file:71] That framing helps a rep explain the journey without overpromising on areas that belong to the medical or training layers.[file:71]</p>
+          <div class="score-grid">
+            <div class="score"><strong>1</strong><span>Lead with the differentiated model, because the app combines medical review, body-composition tracking, and fitness support.[file:71]</span></div>
+            <div class="score"><strong>2</strong><span>Use screenshots in order: onboarding, intake, member recognition, then activated experience.[file:71][file:69]</span></div>
+            <div class="score"><strong>3</strong><span>Flag pricing or outdated mock-up elements as provisional until production confirms them.[file:69]</span></div>
+          </div>
+        </article>
+        <aside class="panel hero-visual" aria-label="Key visuals">
+          <div class="screen-card">
+            <img src="assets/Screenshot_20260422_071238-21.jpg" alt="Vitelize home screen with Start your journey" width="720" height="1520" loading="lazy">
+          </div>
+          <div class="mini-note">
+            <strong>Visual anchor for training:</strong>
+            <p>Use the home screen and Core connection screen together to explain that the app is both a guided onboarding experience and a coordination hub once the user is activated.[file:71]</p>
+          </div>
+        </aside>
+      </section>
+
+      <div class="content-grid">
+        <section id="modules">
+          <article class="panel section-card">
+            <h2 class="section-title">Training modules</h2>
+            <p class="section-intro">Each module below is collapsible so a rep can move from basic orientation to deeper selling language, objections, and screenshot-supported proof points.[file:71]</p>
+            <div class="lesson-grid">
+
+              <details class="module" open>
+                <summary class="module-summary">
+                  <div style="display:flex;gap:1rem;align-items:flex-start">
+                    <span class="module-index">1</span>
+                    <div>
+                      <h3>Platform positioning</h3>
+                      <p>Explain what Vitelize is, how it is differentiated, and why it should not be pitched as a simple weight-loss tracker.[file:71]</p>
+                    </div>
+                  </div>
+                  <span class="module-arrow">+</span>
+                </summary>
+                <div class="module-body">
+                  <div class="module-columns">
+                    <div class="callout-box">
+                      <h4>What the rep should know</h4>
+                      <ul class="bullet-list">
+                        <li>Vitelize is described as physician-guided GLP-1 care focused on losing fat while protecting muscle.[file:71]</li>
+                        <li>The supplied copy says the platform combines secure medical intake, provider messaging, treatment-plan review, reminder tools, symptom logging, body-composition tracking, and Trainerize-connected exercise data.[file:71]</li>
+                        <li>The differentiation claim in the source copy is that Vitelize combines medical care, body-composition tracking, and fitness support in one experience.[file:71]</li>
+                      </ul>
+                    </div>
+                    <div class="talk-track" id="talk-tracks">
+                      <h4>Suggested talk track</h4>
+                      <p class="quote">“Vitelize is not just a medication tracker. It gives the patient one coordinated experience for intake, provider-guided treatment, ongoing reminders, body-composition visibility, and connected fitness support.”[file:71]</p>
+                    </div>
+                  </div>
+                  <div class="objection">
+                    <h4>If a prospect says “this sounds like any GLP-1 app”</h4>
+                    <p>Come back to the combination: physician-guided care, monthly body-composition visibility, and a partnered fitness component designed to help preserve muscle during weight loss.[file:71]</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="module">
+                <summary class="module-summary">
+                  <div style="display:flex;gap:1rem;align-items:flex-start">
+                    <span class="module-index">2</span>
+                    <div>
+                      <h3>Who owns what</h3>
+                      <p>Teach the rep how to explain the difference between Vitelize, CareValidate, and CoreProgression without blurring responsibilities.[file:71]</p>
+                    </div>
+                  </div>
+                  <span class="module-arrow">+</span>
+                </summary>
+                <div class="module-body">
+                  <div class="module-columns">
+                    <div class="callout-box">
+                      <h4>Responsibility map</h4>
+                      <ul class="bullet-list">
+                        <li>Vitelize is the patient-facing app and coordination experience.[file:71]</li>
+                        <li>The disclaimer language states that prescribing and medication monitoring are handled by independent clinicians affiliated with CareValidate.[file:71]</li>
+                        <li>CoreProgression appears as the member-recognition and training-adjacent layer, reinforced by the connected account screen and the references to Trainerize syncing.[file:71][file:69]</li>
+                      </ul>
+                    </div>
+                    <div class="talk-track">
+                      <h4>Suggested talk track</h4>
+                      <p class="quote">“Think of Vitelize as the digital front door and coordination hub, CareValidate as the licensed clinical layer behind treatment decisions, and CoreProgression as the membership and training connection when that integration applies.”[file:71]</p>
+                    </div>
+                  </div>
+                  <div class="screen-strip">
+                    <div class="screen-note"><img src="assets/Screenshot_20260422_070602-4.jpg" alt="CoreProgression connected screen" width="720" height="1520" loading="lazy"><h4>Core proof point</h4><p>The user sees explicit CoreProgression connection confirmation and member-benefit language.[file:71]</p></div>
+                    <div class="screen-note"><img src="assets/Screenshot_20260422_071115-13.jpg" alt="Colorado consent screen" width="720" height="1520" loading="lazy"><h4>Compliance proof point</h4><p>State-specific consent reinforces that this is a regulated medical data flow, not a generic wellness app.[file:71]</p></div>
+                    <div class="screen-note"><img src="assets/Screenshot_20260422_071126-14.jpg" alt="Terms and privacy screen" width="720" height="1520" loading="lazy"><h4>Activation proof point</h4><p>Terms and privacy completion sit inside the account-creation pathway before access is completed.[file:71]</p></div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="module">
+                <summary class="module-summary">
+                  <div style="display:flex;gap:1rem;align-items:flex-start">
+                    <span class="module-index">3</span>
+                    <div>
+                      <h3>Walking a prospect through onboarding</h3>
+                      <p>Give reps a clear sequence for presenting the flow using screenshots as visual proof instead of jumping around randomly.[file:71][file:69]</p>
+                    </div>
+                  </div>
+                  <span class="module-arrow">+</span>
+                </summary>
+                <div class="module-body">
+                  <div class="callout-box">
+                    <h4>Recommended sequence</h4>
+                    <ul class="bullet-list">
+                      <li>Start with the onboarding carousel to establish the promise of physician-guided GLP-1 care, progress tracking, and expert support.[file:71]</li>
+                      <li>Move to sign-up, terms, privacy, and Colorado consent to show that the flow is structured and compliant.[file:71]</li>
+                      <li>Then show identity capture, health questions, and intake completion to reinforce that eligibility is reviewed through a true medical intake process.[file:71]</li>
+                      <li>Finish with the Core connection, plan reference, and activated home screen to show the user moving from intake into a live managed experience.[file:71][file:69]</li>
+                    </ul>
+                  </div>
+                  <div class="talk-track">
+                    <h4>Suggested talk track</h4>
+                    <p class="quote">“The easiest way to understand the product is to follow the same journey the patient follows: education first, secure account setup second, health intake third, then activation into the ongoing care and training experience.”[file:71]</p>
+                  </div>
+                  <div class="screen-strip">
+                    <div class="screen-note"><img src="assets/Screenshot_20260422_071607-25.jpg" alt="Personalized GLP-1 Care onboarding screen" width="720" height="1520" loading="lazy"><h4>Start here</h4><p>Use this to open the story around the product promise.[file:71]</p></div>
+                    <div class="screen-note"><img src="assets/Screenshot_20260422_071141-15.jpg" alt="Sign-up screen" width="720" height="1520" loading="lazy"><h4>Account creation</h4><p>Use this to explain how users enter the regulated journey.[file:71]</p></div>
+                    <div class="screen-note"><img src="assets/Screenshot_20260422_071211-18.jpg" alt="Information saved successfully screen" width="720" height="1520" loading="lazy"><h4>Submission point</h4><p>Use this to signal that intake is completed before activation.[file:71]</p></div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="module">
+                <summary class="module-summary">
+                  <div style="display:flex;gap:1rem;align-items:flex-start">
+                    <span class="module-index">4</span>
+                    <div>
+                      <h3>Guardrails and red flags</h3>
+                      <p>Help reps stay accurate when discussing pricing, outcomes, and anything that belongs to clinicians instead of sales.[file:69][file:71]</p>
+                    </div>
+                  </div>
+                  <span class="module-arrow">+</span>
+                </summary>
+                <div class="module-body">
+                  <div class="module-columns">
+                    <div class="callout-box">
+                      <h4>What not to overstate</h4>
+                      <ul class="bullet-list">
+                        <li>Do not present legacy pricing mock-ups as final unless production confirms them, because the PDF reference is explicitly inaccurate and template-like.[file:69]</li>
+                        <li>Do not blur the line between program coordination and medical decision-making; clinical decisions are attributed to licensed providers.[file:71]</li>
+                        <li>Do not promise outcomes beyond the source claims; keep the conversation on coordinated care, tracking, and muscle-preservation support positioning.[file:71]</li>
+                      </ul>
+                    </div>
+                    <div class="objection">
+                      <h4>Suggested safe phrasing</h4>
+                      <p>Say that pricing, medication selection, and clinical eligibility are subject to final program configuration and provider review, while the sales conversation should focus on the user experience and differentiated care model.[file:69][file:71]</p>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </article>
+
+          <article class="panel section-card" id="faq">
+            <h2 class="section-title">Objections & FAQ</h2>
+            <div class="faq">
+              <details open>
+                <summary>What if the prospect asks whether Vitelize itself provides medical care?</summary>
+                <p>Use the disclaimer language: clinical services, including prescribing and monitoring, are provided by clinicians affiliated with CareValidate, while Vitelize provides coaching and program coordination.[file:71]</p>
+              </details>
+              <details>
+                <summary>What if they ask why CoreProgression matters?</summary>
+                <p>Explain that CoreProgression signals existing member status and supports training continuity, which fits the broader value proposition of preserving muscle during GLP-1-guided weight loss.[file:71][file:69]</p>
+              </details>
+              <details>
+                <summary>What if they focus only on medication?</summary>
+                <p>Reframe the conversation around the combined experience: intake, provider oversight, reminders, symptom logging, body-composition tracking, and fitness support, rather than medication alone.[file:71]</p>
+              </details>
+              <details>
+                <summary>What if they question the screenshots with pricing?</summary>
+                <p>Label those screens as reference visuals only until final production pricing and checkout logic are confirmed, because the provided mock-up is not reliable as a live source of truth.[file:69]</p>
+              </details>
+            </div>
+          </article>
+        </section>
+
+        <aside>
+          <article class="panel sidebar-panel">
+            <h2 class="section-title" style="font-size:var(--text-lg)">Rep quick guide</h2>
+            <div class="stack">
+              <div class="check-item"><span class="dot"></span><div><strong>Open with differentiation</strong><span class="brand-sub">Medical care + body composition + fitness support together.[file:71]</span></div></div>
+              <div class="check-item"><span class="dot"></span><div><strong>Then explain the journey</strong><span class="brand-sub">Onboarding, compliance, intake, activation.[file:71]</span></div></div>
+              <div class="check-item"><span class="warning-dot dot"></span><div><strong>Use pricing carefully</strong><span class="brand-sub">Legacy plan screens are not confirmed production truth.[file:69]</span></div></div>
+              <div class="check-item"><span class="alert-dot dot"></span><div><strong>Keep medical claims bounded</strong><span class="brand-sub">Clinical review and prescribing stay with licensed providers.[file:71]</span></div></div>
+            </div>
+          </article>
+
+          <article class="panel sidebar-panel" style="margin-top:1rem">
+            <h2 class="section-title" style="font-size:var(--text-lg)">Visual proof points</h2>
+            <div class="stack">
+              <div class="screen-note"><img src="assets/Screenshot_20260422_071232-20.jpg" alt="Wellness snapshot screen" width="720" height="1520" loading="lazy"><h4>Metrics story</h4><p>Supports the message that the platform can surface more than a number on the scale.[file:69][file:71]</p></div>
+              <div class="screen-note"><img src="assets/Screenshot_20260422_071449-23.jpg" alt="Key metrics detail screen" width="720" height="1520" loading="lazy"><h4>Outcome visibility</h4><p>Use to reinforce tracking and body-composition-adjacent storytelling.[file:71]</p></div>
+              <div class="screen-note"><img src="assets/Screenshot_20260422_070929-5.jpg" alt="Medical conditions screen" width="720" height="1520" loading="lazy"><h4>Intake credibility</h4><p>Shows that the app gathers real health-history inputs as part of eligibility review.[file:71]</p></div>
+            </div>
+          </article>
+        </aside>
+      </div>
+
+      <div class="footer-note">
+        This training portal is based on the supplied app copywriting document and the screenshot/mock-up set. It is intended to train sales reps on narrative, sequencing, and role clarity, not to replace final legal or production-approved collateral.[file:71][file:69]
+      </div>
+    </main>
+  </div>
+
+  <script>
+    (function(){
+      const root=document.documentElement;
+      const btn=document.querySelector('[data-theme-toggle]');
+      let theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+      root.setAttribute('data-theme',theme);
+      function render(){btn.textContent=theme==='dark'?'Switch to light mode':'Switch to dark mode';btn.setAttribute('aria-label','Switch to '+(theme==='dark'?'light':'dark')+' mode');}
+      render();
+      btn.addEventListener('click',()=>{theme=theme==='dark'?'light':'dark';root.setAttribute('data-theme',theme);render();});
+    })();
+  </script>
+</body>
+</html>
